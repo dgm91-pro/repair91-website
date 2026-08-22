@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b12">
+  <title>Repair91 — Répare Moin Cher !</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="logo" href="#accueil" aria-label="PhoneFix accueil">
+      <span class="logo-mark">🏠︎</span>
+      <span>Repair<span>91</span></span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false">
+      ☰
+    </button>
+
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#accueil">Accueil</a>
+      <a href="#shop">Le Shop</a>
+      <a href="#fonctionnement">Fonctionnement</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="accueil" class="hero">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">PRIX • QUALITÉE • TRANSPARENCE</p>
+        <h1>Donne une <em>seconde vie</em> à ton téléphone.</h1>
+        <p class="hero-text">On trouve la bonne pièce pour ton modèle, compare les options ensemble et tu passe directement chez le réparateur.</p>
+
+        <div class="hero-badges">
+          <span class="badge">✓ Pièces Sélectionnées</span>
+          <span class="badge">Amazon → Suivi et Remboursements possibles</span>
+        </div>
+
+        <div class="hero-actions">
+          <a class="button primary" href="#shop"> Voir Le Shop <span>↗</span></a>
+          <a class="button ghost" href="#fonctionnement">Comment ça marche ?</a>
+        </div>
+      </div>
+
+      <div class="hero-art reveal" aria-hidden="true">
+        <div class="phone phone-back"></div>
+        <div class="phone phone-front">
+          <div class="screen">
+            <div class="screen-top"></div>
+            <div class="screen-orb"></div>
+            <div class="screen-line"></div>
+            <div class="screen-line short"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="shop" class="section">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow">FOURNISSEURS FIABLES</p>
+          <h2>La bonne pièce, sans prise de tête.</h2>
+        </div>
+        <p>Bienvenu Sur le Shop , les produits redirigent vers Amazon. Si un Arcticle devient indisponible, signale-le en un clic !</p>
+      </div>
+
+      <div class="warning-box reveal">
+        <div class="warning-icon">⚠</div>
+        <div class="warning-content">
+          <strong>Attention — le shop est un coup d’avance, pas une garantie</strong>
+          <p>
+            Ce catalogue te permet de t’avancer et de voir les pièces que je recommande sur les téléphones les plus courants.
+            <strong>Tu dois absolument vérifier que la pièce référencée correspond bien à ton téléphone</strong>
+            (modèle exact, version, numéro de série…). En cas de doute, <strong>préfère me contacter</strong>
+            avant d’acheter : je te confirmerai la compatibilité ou te redirigerai vers une autre pièce compatible.
+          </p>
+
+          <button type="button" class="hint-toggle" id="compat-toggle" aria-expanded="false" aria-controls="compat-panel">
+            Comment bien choisir sa pièce ?
+            <span class="hint-chevron" aria-hidden="true">›</span>
+          </button>
+
+          <div id="compat-panel" class="compat-panel" hidden>
+            <ul class="compat-list">
+              <li>
+                <span class="compat-label">Modèle exact</span>
+                <span>ex. iPhone 13, Galaxy S22, Xiaomi Redmi 9C — pas juste « iPhone » ou « Samsung ».</span>
+              </li>
+              <li>
+                <span class="compat-label">Numéro de modèle</span>
+                <span>Au dos du téléphone, ou dans Réglages ( C'est le numéro IMEI ) </span>
+              </li>
+              <li>
+                <span class="compat-label">Numéro de série</span>
+                <span>C'est le truc à checker en premier en cas de doute — je peux t’aider à le vérifier.</span>
+              </li>
+              <li>
+                <span class="compat-label">Référence produit</span>
+                <span>Compare le titre et la description Amazon avec ton modèle exact.</span>
+              </li>
+              <li>
+                <span class="compat-label">Qualitée Produit</span>
+                <span>Il est possible qu'il y'ait plusieurs pièces disponible à des prix différents. Un prix plus bas peut aussi affecter la qualitée ex : un écran LCD sera moin cher qu'un AMOLED , mais les couleurs seront moin saturées !
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="filters reveal">
+        <label>
+          Rechercher
+          <input id="search" type="search" placeholder="Ex. batterie, écran..." autocomplete="off">
+        </label>
+        <label>
+          Modèle
+          <select id="model">
+            <option value="all">Tous les modèles</option>
+          </select>
+        </label>
+        <label>
+          Type de pièce
+          <select id="part">
+            <option value="all">Toutes les pièces</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="product-grid" class="product-grid" aria-live="polite"></div>
+      <p id="empty" class="empty" hidden>Ton arcticle n'est pas inscrit dans le Shop , contacte moi pour la réparation.</p>
+    </section>
+
+    <section id="fonctionnement" class="section dark-section">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow">FONCTIONNEMENT</p>
+          <h2>Une réparation simple, en 3 étapes.</h2>
+        </div>
+      </div>
+
+      <div class="steps">
+        <article class="step reveal">
+          <div class="step-number">1</div>
+          <div class="step-body">
+            <h3>Contacte-moi</h3>
+            <p>Envoie-moi un message WhatsApp ou un Mail avec ton modèle et le problème. On valide ensemble la pièce exacte à commander si besoin. En cas de gros problème ou de problème pouvant provenir de différents composants, je devrais effectuer un diagnostic.</p>
+          </div>
+        </article>
+
+        <article class="step reveal">
+          <div class="step-number">2</div>
+          <div class="step-body">
+            <h3>Réparation - 20€</h3>
+            <p>Une fois la pièce reçue , Tu ramène Le Téléphone et la pièce, ou si tu habite à : Igny/Vauhallan/Bièvre/Palaiseau/Massy, je peux venir le chercher en fonction de mes crénaux. Je m'occupe de la réparation , et je te recontacte dès que j'ai fini !</p>
+          </div>
+        </article>
+
+        <article class="step reveal">
+          <div class="step-number">3</div>
+          <div class="step-body">
+            <h3>Récupère Ton Smartphone </h3>
+            <p>On se met d'accord sur un crénaux , et tu rapporte <strong>20€ en espèce ou virement instantané ( pas de wero / paypal ou autre que par IBAN )</strong> , et tu récupère ton téléphone comme neuf !.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="notice reveal">
+        <strong>À retenir</strong>
+        <p>La pièce est commandée et payée par tes soins, si celle-ci est défectueuse , je te la rend comme je l'ai reçue pour que tu puisse te faire rembourser ou que l'on t'en renvoie une. Ma prestation couvre uniquement la main-d’œuvre : 20 € pour la réparation !</p>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="contact-info reveal">
+        <p class="eyebrow">CONTACT</p>
+        <h2>Une question ? Parlons-en.</h2>
+        <p>Pour une réparation, une question de compatibilité ou un lien qui ne fonctionne plus depuis longtemps, contacte-moi directement.</p>
+
+        <a class="whatsapp-button" href="https://wa.me/33600000000?text=Bonjour%20%21%20Je%20souhaite%20faire%20réparer%20mon%20téléphone." target="_blank" rel="noopener noreferrer">
+          Contacter sur WhatsApp <span>↗</span>
+        </a>
+
+        <div class="contact-details">
+          <div>
+            <span>Email</span>
+            <p>dgm91.pro@gmail.com</p>
+          </div>
+          <div>
+            <span>Horaires</span>
+            <p>Lun — Dim · 24h/24 ( Temporaire , changement d'horaire vers septembre ! )</p>
+          </div>
+        </div>
+      </div>
+
+      <form id="contact-form" class="contact-form reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <label>
+          Nom
+          <input name="name" required maxlength="80" autocomplete="name">
+        </label>
+        <label>
+          Email
+          <input name="email" type="email" required maxlength="120" autocomplete="email">
+        </label>
+        <label>
+          Message
+          <textarea name="message" required maxlength="2000" rows="6"></textarea>
+        </label>
+
+        <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="_subject" value="Nouveau message — PhoneFix">
+
+        <button class="button primary" type="submit">
+          Envoyer le message <span>→</span>
+        </button>
+        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <span>© <span id="year"></span> PhoneFix</span>
+  </footer>
+
+  <dialog id="report-dialog">
+    <form method="dialog" class="dialog-card">
+      <button class="dialog-close" value="cancel" aria-label="Fermer">×</button>
+      <p class="eyebrow">SIGNALER</p>
+      <h2>Lien indisponible ?</h2>
+      <p>Merci ! Les informations de l’article seront ajoutées au formulaire de contact.</p>
+      <a id="report-link" class="button primary" href="#contact">Préparer le signalement →</a>
+      <p id="report-status" class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
