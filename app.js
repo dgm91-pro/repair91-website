@@ -162,10 +162,23 @@ function prepareReport(product) {
   setTimeout(() => messageField.focus(), 500);
 }
 
+function getCaptchaResponse() {
+  const captcha = contactForm?.querySelector('textarea[name="h-captcha-response"]');
+  return captcha?.value?.trim() || '';
+}
+
 async function submitContactForm(event) {
   event.preventDefault();
 
   if (!contactForm.reportValidity()) return;
+
+  const captchaResponse = getCaptchaResponse();
+  if (!captchaResponse) {
+    formStatus.className = 'form-status is-error';
+    formStatus.textContent = 'Merci de valider le contrôle anti-robot avant d’envoyer.';
+    contactForm.querySelector('.h-captcha')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
 
   const submitButton = contactForm.querySelector('button[type="submit"]');
   const originalText = submitButton.innerHTML;
@@ -177,16 +190,19 @@ async function submitContactForm(event) {
   formStatus.textContent = 'Envoi en cours…';
 
   try {
-    const response = await fetch(contactForm.action, {
+    const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
-      body: formData,
-      headers: { Accept: 'application/json' }
+      headers: {
+        Accept: 'application/json'
+      },
+      body: formData
     });
 
     const result = await response.json().catch(() => ({}));
+    const message = result?.body?.message || result?.message || result?.error;
 
-    if (!response.ok) {
-      throw new Error(result.errors?.[0]?.message || result.error || 'Impossible d’envoyer le message.');
+    if (!response.ok || result.success === false) {
+      throw new Error(message || 'Impossible d’envoyer le message.');
     }
 
     contactForm.reset();
@@ -195,7 +211,12 @@ async function submitContactForm(event) {
   } catch (error) {
     console.error('Erreur formulaire de contact:', error);
     formStatus.className = 'form-status is-error';
-    formStatus.textContent = 'Impossible d’envoyer le message. Vérifie ta connexion puis réessaie.';
+
+    if (error?.message?.toLowerCase().includes('too many') || error?.message?.includes('429')) {
+      formStatus.textContent = 'Trop de tentatives. Attends un moment avant de réessayer.';
+    } else {
+      formStatus.textContent = 'Impossible d’envoyer le message. Vérifie ta connexion puis réessaie.';
+    }
   } finally {
     submitButton.disabled = false;
     submitButton.innerHTML = originalText;

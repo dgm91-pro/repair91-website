@@ -198,7 +198,10 @@
         </div>
       </div>
 
-      <form id="contact-form" class="contact-form reveal" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form id="contact-form" class="contact-form reveal" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="abbdbe7c-fe29-4b14-b1aa-8df60f036aef">
+        <input type="hidden" name="subject" value="Nouveau message — PhoneFix">
+        <input type="hidden" name="from_name" value="PhoneFix">
         <label>
           Nom
           <input name="name" required maxlength="80" autocomplete="name">
@@ -212,8 +215,9 @@
           <textarea name="message" required maxlength="2000" rows="6"></textarea>
         </label>
 
-        <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <input type="hidden" name="_subject" value="Nouveau message — PhoneFix">
+        <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="h-captcha" data-captcha="true" data-theme="dark" data-size="normal"></div>
 
         <button class="button primary" type="submit">
           Envoyer le message <span>→</span>
@@ -238,6 +242,7 @@
     </form>
   </dialog>
 
+  <script src="https://web3forms.com/client/script.js" async defer></script>
   <script src="app.js" defer></script>
 </body>
 </html>
