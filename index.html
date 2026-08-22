@@ -1,10 +1,13 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="lime">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090b12">
-  <title>Repair91 — Répare Moin Cher !</title>
+  <meta name="theme-color" content="#0b0c0f">
+  <meta name="description" content="Repair91 — Réparation de téléphones à prix juste. Pièces sélectionnées, main-d’œuvre 20 €. Zone Igny, Vauhallan, Bièvres, Palaiseau, Massy.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://web3forms.com https://js.hcaptcha.com https://hcaptcha.com; style-src 'self' 'unsafe-inline' https://hcaptcha.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.web3forms.com https://hcaptcha.com https://*.hcaptcha.com; frame-src https://hcaptcha.com https://*.hcaptcha.com; font-src 'self'; base-uri 'self'; form-action https://api.web3forms.com;">
+  <title>Repair91 — Répare moins cher !</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -12,8 +15,8 @@
   <div class="noise" aria-hidden="true"></div>
 
   <header class="site-header">
-    <a class="logo" href="#accueil" aria-label="PhoneFix accueil">
-      <span class="logo-mark">🏠︎</span>
+    <a class="logo" href="#accueil" aria-label="Repair91 accueil">
+      <span class="logo-mark">R91</span>
       <span>Repair<span>91</span></span>
     </a>
 
@@ -32,17 +35,17 @@
   <main>
     <section id="accueil" class="hero">
       <div class="hero-copy reveal">
-        <p class="eyebrow">PRIX • QUALITÉE • TRANSPARENCE</p>
+        <p class="eyebrow">PRIX • QUALITÉ • TRANSPARENCE</p>
         <h1>Donne une <em>seconde vie</em> à ton téléphone.</h1>
-        <p class="hero-text">On trouve la bonne pièce pour ton modèle, compare les options ensemble et tu passe directement chez le réparateur.</p>
+        <p class="hero-text">On trouve la bonne pièce pour ton modèle, on compare les options ensemble et tu passes directement chez le réparateur.</p>
 
         <div class="hero-badges">
-          <span class="badge">✓ Pièces Sélectionnées</span>
-          <span class="badge">Amazon → Suivi et Remboursements possibles</span>
+          <span class="badge">✓ Pièces sélectionnées</span>
+          <span class="badge">Amazon → Suivi et remboursements possibles</span>
         </div>
 
         <div class="hero-actions">
-          <a class="button primary" href="#shop"> Voir Le Shop <span>↗</span></a>
+          <a class="button primary" href="#shop">Voir le Shop <span>↗</span></a>
           <a class="button ghost" href="#fonctionnement">Comment ça marche ?</a>
         </div>
       </div>
@@ -66,7 +69,7 @@
           <p class="eyebrow">FOURNISSEURS FIABLES</p>
           <h2>La bonne pièce, sans prise de tête.</h2>
         </div>
-        <p>Bienvenu Sur le Shop , les produits redirigent vers Amazon. Si un Arcticle devient indisponible, signale-le en un clic !</p>
+        <p>Bienvenue sur le Shop : les produits redirigent vers Amazon. Si un article devient indisponible, signale-le en un clic !</p>
       </div>
 
       <div class="warning-box reveal">
@@ -93,20 +96,19 @@
               </li>
               <li>
                 <span class="compat-label">Numéro de modèle</span>
-                <span>Au dos du téléphone, ou dans Réglages ( C'est le numéro IMEI ) </span>
+                <span>Au dos du téléphone, ou dans Réglages → Général → Informations (ce n’est pas l’IMEI).</span>
               </li>
               <li>
                 <span class="compat-label">Numéro de série</span>
-                <span>C'est le truc à checker en premier en cas de doute — je peux t’aider à le vérifier.</span>
+                <span>À vérifier en priorité en cas de doute — je peux t’aider à le contrôler.</span>
               </li>
               <li>
                 <span class="compat-label">Référence produit</span>
                 <span>Compare le titre et la description Amazon avec ton modèle exact.</span>
               </li>
               <li>
-                <span class="compat-label">Qualitée Produit</span>
-                <span>Il est possible qu'il y'ait plusieurs pièces disponible à des prix différents. Un prix plus bas peut aussi affecter la qualitée ex : un écran LCD sera moin cher qu'un AMOLED , mais les couleurs seront moin saturées !
-                </span>
+                <span class="compat-label">Qualité produit</span>
+                <span>Plusieurs pièces peuvent être disponibles à des prix différents. Un prix plus bas peut affecter la qualité : un écran LCD sera moins cher qu’un AMOLED, mais les couleurs seront moins saturées.</span>
               </li>
             </ul>
           </div>
@@ -133,7 +135,7 @@
       </div>
 
       <div id="product-grid" class="product-grid" aria-live="polite"></div>
-      <p id="empty" class="empty" hidden>Ton arcticle n'est pas inscrit dans le Shop , contacte moi pour la réparation.</p>
+      <p id="empty" class="empty" hidden>Ton article n’est pas inscrit dans le Shop, contacte-moi pour la réparation.</p>
     </section>
 
     <section id="fonctionnement" class="section dark-section">
@@ -149,30 +151,30 @@
           <div class="step-number">1</div>
           <div class="step-body">
             <h3>Contacte-moi</h3>
-            <p>Envoie-moi un message WhatsApp ou un Mail avec ton modèle et le problème. On valide ensemble la pièce exacte à commander si besoin. En cas de gros problème ou de problème pouvant provenir de différents composants, je devrais effectuer un diagnostic.</p>
+            <p>Envoie-moi un message WhatsApp, Instagram ou un e-mail avec ton modèle et le problème. On valide ensemble la pièce exacte à commander si besoin. En cas de gros problème ou de panne pouvant provenir de différents composants, je devrai effectuer un diagnostic.</p>
           </div>
         </article>
 
         <article class="step reveal">
           <div class="step-number">2</div>
           <div class="step-body">
-            <h3>Réparation - 20€</h3>
-            <p>Une fois la pièce reçue , Tu ramène Le Téléphone et la pièce, ou si tu habite à : Igny/Vauhallan/Bièvre/Palaiseau/Massy, je peux venir le chercher en fonction de mes crénaux. Je m'occupe de la réparation , et je te recontacte dès que j'ai fini !</p>
+            <h3>Réparation — 20 €</h3>
+            <p>Une fois la pièce reçue, tu ramènes le téléphone et la pièce. Si tu habites à Igny / Vauhallan / Bièvres / Palaiseau / Massy, je peux venir le chercher selon mes créneaux. Je m’occupe de la réparation et je te recontacte dès que j’ai fini !</p>
           </div>
         </article>
 
         <article class="step reveal">
           <div class="step-number">3</div>
           <div class="step-body">
-            <h3>Récupère Ton Smartphone </h3>
-            <p>On se met d'accord sur un crénaux , et tu rapporte <strong>20€ en espèce ou virement instantané ( pas de wero / paypal ou autre que par IBAN )</strong> , et tu récupère ton téléphone comme neuf !.</p>
+            <h3>Récupère ton smartphone</h3>
+            <p>On se met d’accord sur un créneau, tu apportes <strong>20 € en espèces ou par virement instantané (pas de Wero / PayPal — uniquement par IBAN)</strong>, et tu récupères ton téléphone comme neuf !</p>
           </div>
         </article>
       </div>
 
       <div class="notice reveal">
         <strong>À retenir</strong>
-        <p>La pièce est commandée et payée par tes soins, si celle-ci est défectueuse , je te la rend comme je l'ai reçue pour que tu puisse te faire rembourser ou que l'on t'en renvoie une. Ma prestation couvre uniquement la main-d’œuvre : 20 € pour la réparation !</p>
+        <p>La pièce est commandée et payée par tes soins. Si celle-ci est défectueuse, je te la rends comme je l’ai reçue pour que tu puisses te faire rembourser ou qu’on t’en renvoie une. Ma prestation couvre uniquement la main-d’œuvre : 20 € pour la réparation !</p>
       </div>
     </section>
 
@@ -180,28 +182,39 @@
       <div class="contact-info reveal">
         <p class="eyebrow">CONTACT</p>
         <h2>Une question ? Parlons-en.</h2>
-        <p>Pour une réparation, une question de compatibilité ou un lien qui ne fonctionne plus depuis longtemps, contacte-moi directement.</p>
+        <p>Pour une réparation, une question de compatibilité ou un lien qui ne fonctionne plus, contacte-moi directement.</p>
 
-        <a class="whatsapp-button" href="https://wa.me/33600000000?text=Bonjour%20%21%20Je%20souhaite%20faire%20réparer%20mon%20téléphone." target="_blank" rel="noopener noreferrer">
-          Contacter sur WhatsApp <span>↗</span>
-        </a>
+        <div class="social-links">
+          <a class="whatsapp-button" href="https://wa.me/33749722380" target="_blank" rel="noopener noreferrer">
+            WhatsApp <span>↗</span>
+          </a>
+          <a class="instagram-button" href="https://instagram.com/dgm9.1" target="_blank" rel="noopener noreferrer">
+            Instagram <span>↗</span>
+          </a>
+        </div>
 
         <div class="contact-details">
           <div>
-            <span>Email</span>
+            <span>Email :</span>
             <p>dgm91.pro@gmail.com</p>
           </div>
           <div>
-            <span>Horaires</span>
-            <p>Lun — Dim · 24h/24 ( Temporaire , changement d'horaire vers septembre ! )</p>
+            <span>N° de Téléphone :</span>
+            <p>+33 07 49 72 23 80</p>
+          </div>
+          <div>
+            <span>Horaires :</span>
+            <p>Lun — Dim · 24h/24 (temporaire, changement d’horaire vers septembre)</p>
           </div>
         </div>
       </div>
 
-      <form id="contact-form" class="contact-form reveal" action="https://api.web3forms.com/submit" method="POST">
+      <form id="contact-form" class="contact-form reveal" action="https://api.web3forms.com/submit" method="POST" novalidate>
         <input type="hidden" name="access_key" value="abbdbe7c-fe29-4b14-b1aa-8df60f036aef">
-        <input type="hidden" name="subject" value="Nouveau message — PhoneFix">
-        <input type="hidden" name="from_name" value="PhoneFix">
+        <input type="hidden" name="subject" value="Nouveau message — Repair91">
+        <input type="hidden" name="from_name" value="Repair91">
+        <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
         <label>
           Nom
           <input name="name" required maxlength="80" autocomplete="name">
@@ -215,8 +228,6 @@
           <textarea name="message" required maxlength="2000" rows="6"></textarea>
         </label>
 
-        <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-
         <div class="h-captcha" data-captcha="true" data-theme="dark" data-size="normal"></div>
 
         <button class="button primary" type="submit">
@@ -228,7 +239,18 @@
   </main>
 
   <footer>
-    <span>© <span id="year"></span> PhoneFix</span>
+    <div class="footer-inner">
+      <span>© <span id="year"></span> Repair91</span>
+      <div class="footer-themes">
+        <label for="theme-switcher">Thème</label>
+        <select id="theme-switcher" aria-label="Changer de palette de couleurs">
+          <option value="lime">Jaune </option>
+          <option value="cream">Crème </option>
+          <option value="slate">Bleu </option>
+          <option value="sand">olive</option>
+        </select>
+      </div>
+    </div>
   </footer>
 
   <dialog id="report-dialog">
@@ -243,6 +265,7 @@
   </dialog>
 
   <script src="https://web3forms.com/client/script.js" async defer></script>
+  <script src="products.js"></script>
   <script src="app.js" defer></script>
 </body>
 </html>

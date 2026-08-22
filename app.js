@@ -1,59 +1,4 @@
-const PRODUCTS = [
-  {
-    id: "ip12-battery",
-    model: "iPhone 12",
-    part: "Batterie",
-    title: "Batterie compatible iPhone 12",
-    description: "Exemple de fiche produit à remplacer par ton vrai article.",
-    image: "https://images.unsplash.com/photo-1609592424824-3e5f4f1f8c9d?auto=format&fit=crop&w=900&q=80",
-    amazon: "https://www.amazon.fr/"
-  },
-  {
-    id: "ip13-screen",
-    model: "iPhone 13",
-    part: "Écran",
-    title: "Écran compatible iPhone 13",
-    description: "Exemple de fiche produit à remplacer par ton vrai article.",
-    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80",
-    amazon: "https://www.amazon.fr/"
-  },
-  {
-    id: "s22-battery",
-    model: "Galaxy S22",
-    part: "Batterie",
-    title: "Batterie compatible Galaxy S22",
-    description: "Exemple de fiche produit à remplacer par ton vrai article.",
-    image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=900&q=80",
-    amazon: "https://www.amazon.fr/"
-  },
-  {
-    id: "s21-back",
-    model: "Galaxy S21",
-    part: "Vitre arrière",
-    title: "Vitre arrière compatible Galaxy S21",
-    description: "Exemple de fiche produit à remplacer par ton vrai article.",
-    image: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?auto=format&fit=crop&w=900&q=80",
-    amazon: "https://www.amazon.fr/"
-  },
-  {
-    id: "ip11-camera",
-    model: "iPhone 11",
-    part: "Caméra",
-    title: "Module caméra compatible iPhone 11",
-    description: "Exemple de fiche produit à remplacer par ton vrai article.",
-    image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=900&q=80",
-    amazon: "https://www.amazon.fr/"
-  },
-  {
-    id: "a54-screen",
-    model: "Galaxy A54",
-    part: "Écran",
-    title: "Écran compatible Galaxy A54",
-    description: "Exemple de fiche produit à remplacer par ton vrai article.",
-    image: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=900&q=80",
-    amazon: "https://www.amazon.fr/"
-  }
-];
+let PRODUCTS = [];
 
 const CONTACT_EMAIL = "dgm91.pro@gmail.com";
 
@@ -84,6 +29,9 @@ function uniqueValues(key) {
 }
 
 function populateFilters() {
+  while (model.options.length > 1) model.remove(1);
+  while (part.options.length > 1) part.remove(1);
+
   uniqueValues("model").forEach((value) => {
     model.insertAdjacentHTML(
       "beforeend",
@@ -100,6 +48,15 @@ function populateFilters() {
 }
 
 function renderProducts() {
+  if (!PRODUCTS.length) {
+    grid.innerHTML = "";
+    if (empty) {
+      empty.hidden = false;
+      empty.textContent = "Aucun produit dans le catalogue.";
+    }
+    return;
+  }
+
   const query = search.value.trim().toLowerCase();
 
   const products = PRODUCTS.filter((product) => {
@@ -107,7 +64,6 @@ function renderProducts() {
     const matchesPart = part.value === "all" || product.part === part.value;
     const haystack = `${product.title} ${product.model} ${product.part} ${product.description}`.toLowerCase();
     const matchesSearch = !query || haystack.includes(query);
-
     return matchesModel && matchesPart && matchesSearch;
   });
 
@@ -119,6 +75,7 @@ function renderProducts() {
         alt="${escapeHTML(product.title)}"
         loading="lazy"
         referrerpolicy="no-referrer"
+        decoding="async"
       >
       <div class="product-body">
         <span class="tag">${escapeHTML(product.part)} · ${escapeHTML(product.model)}</span>
@@ -137,7 +94,12 @@ function renderProducts() {
     </article>
   `).join("");
 
-  empty.hidden = products.length !== 0;
+  if (empty) {
+    empty.hidden = products.length !== 0;
+    if (products.length === 0) {
+      empty.textContent = "Ton article n’est pas inscrit dans le Shop, contacte-moi pour la réparation.";
+    }
+  }
 }
 
 function prepareReport(product) {
@@ -155,16 +117,23 @@ function prepareReport(product) {
     `Pièce : ${product.part}`,
     ``,
     `Merci.`
-  ].join('\n');
+  ].join("\n");
 
   reportDialog.close();
-  document.querySelector('#contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelector("#contact").scrollIntoView({ behavior: "smooth", block: "start" });
   setTimeout(() => messageField.focus(), 500);
 }
 
 function getCaptchaResponse() {
   const captcha = contactForm?.querySelector('textarea[name="h-captcha-response"]');
-  return captcha?.value?.trim() || '';
+  if (captcha && captcha.value && captcha.value.trim().length > 0) {
+    return captcha.value.trim();
+  }
+  const hidden = contactForm?.querySelector('input[name="h-captcha-response"]');
+  if (hidden && hidden.value && hidden.value.trim().length > 0) {
+    return hidden.value.trim();
+  }
+  return "";
 }
 
 async function submitContactForm(event) {
@@ -172,11 +141,18 @@ async function submitContactForm(event) {
 
   if (!contactForm.reportValidity()) return;
 
+  // Sur file:// le captcha ne charge pas → on prévient clairement
+  const isFileProtocol = location.protocol === "file:";
   const captchaResponse = getCaptchaResponse();
+
   if (!captchaResponse) {
-    formStatus.className = 'form-status is-error';
-    formStatus.textContent = 'Merci de valider le contrôle anti-robot avant d’envoyer.';
-    contactForm.querySelector('.h-captcha')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    formStatus.className = "form-status is-error";
+    if (isFileProtocol) {
+      formStatus.textContent = "Le captcha ne fonctionne pas en ouvrant le fichier localement. Déploie le site (GitHub Pages) ou utilise un serveur local (Live Server).";
+    } else {
+      formStatus.textContent = "Merci de valider le contrôle anti-robot (captcha) avant d’envoyer.";
+      contactForm.querySelector(".h-captcha")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
     return;
   }
 
@@ -185,37 +161,50 @@ async function submitContactForm(event) {
   const formData = new FormData(contactForm);
 
   submitButton.disabled = true;
-  submitButton.innerHTML = 'Envoi en cours…';
-  formStatus.className = 'form-status is-loading';
-  formStatus.textContent = 'Envoi en cours…';
+  submitButton.innerHTML = "Envoi en cours…";
+  formStatus.className = "form-status is-loading";
+  formStatus.textContent = "Envoi en cours…";
 
   try {
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json'
-      },
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { Accept: "application/json" },
       body: formData
     });
 
     const result = await response.json().catch(() => ({}));
-    const message = result?.body?.message || result?.message || result?.error;
+    const message = result?.body?.message || result?.message || result?.error || "";
 
     if (!response.ok || result.success === false) {
-      throw new Error(message || 'Impossible d’envoyer le message.');
+      const lower = String(message).toLowerCase();
+      if (lower.includes("captcha") || lower.includes("hcaptcha") || lower.includes("robot") || lower.includes("spam")) {
+        throw new Error("CAPTCHA_REQUIRED");
+      }
+      if (response.status === 429 || lower.includes("too many") || lower.includes("rate")) {
+        throw new Error("RATE_LIMIT");
+      }
+      throw new Error(message || "SEND_FAILED");
     }
 
     contactForm.reset();
-    formStatus.className = 'form-status is-success';
-    formStatus.textContent = 'Message envoyé avec succès !';
+    if (typeof hcaptcha !== "undefined") {
+      try { hcaptcha.reset(); } catch (_) {}
+    }
+    formStatus.className = "form-status is-success";
+    formStatus.textContent = "Message envoyé avec succès !";
   } catch (error) {
-    console.error('Erreur formulaire de contact:', error);
-    formStatus.className = 'form-status is-error';
+    console.error("Erreur formulaire de contact:", error);
+    formStatus.className = "form-status is-error";
 
-    if (error?.message?.toLowerCase().includes('too many') || error?.message?.includes('429')) {
-      formStatus.textContent = 'Trop de tentatives. Attends un moment avant de réessayer.';
+    const msg = error?.message || "";
+    if (msg === "CAPTCHA_REQUIRED") {
+      formStatus.textContent = "Merci de valider le contrôle anti-robot (captcha) avant d’envoyer.";
+    } else if (msg === "RATE_LIMIT" || msg.toLowerCase().includes("too many") || msg.includes("429")) {
+      formStatus.textContent = "Trop de tentatives. Attends un moment avant de réessayer.";
+    } else if (msg === "SEND_FAILED" || !navigator.onLine) {
+      formStatus.textContent = "Impossible d’envoyer le message. Vérifie ta connexion puis réessaie.";
     } else {
-      formStatus.textContent = 'Impossible d’envoyer le message. Vérifie ta connexion puis réessaie.';
+      formStatus.textContent = "Impossible d’envoyer le message. Vérifie le captcha et ta connexion, puis réessaie.";
     }
   } finally {
     submitButton.disabled = false;
@@ -234,6 +223,7 @@ function openReport(product) {
 function setupNavigation() {
   const toggle = $(".menu-toggle");
   const nav = $(".nav");
+  if (!toggle || !nav) return;
 
   toggle.addEventListener("click", () => {
     const isOpen = nav.classList.toggle("open");
@@ -251,12 +241,10 @@ function setupNavigation() {
 function setupCompatibilityPanel() {
   const toggle = $("#compat-toggle");
   const panel = $("#compat-panel");
-
   if (!toggle || !panel) return;
 
   toggle.addEventListener("click", () => {
     const isOpening = panel.hasAttribute("hidden");
-
     panel.toggleAttribute("hidden", !isOpening);
     toggle.setAttribute("aria-expanded", String(isOpening));
   });
@@ -264,49 +252,85 @@ function setupCompatibilityPanel() {
 
 function setupRevealAnimations() {
   const elements = document.querySelectorAll(".reveal");
-
   if (!("IntersectionObserver" in window)) {
-    elements.forEach((element) => element.classList.add("visible"));
+    elements.forEach((el) => el.classList.add("visible"));
     return;
   }
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-
       entry.target.classList.add("visible");
       observer.unobserve(entry.target);
     });
   }, { threshold: 0.12 });
+  elements.forEach((el) => observer.observe(el));
+}
 
-  elements.forEach((element) => observer.observe(element));
+function setupThemeSwitcher() {
+  const switcher = $("#theme-switcher");
+  if (!switcher) return;
+
+  const saved = localStorage.getItem("repair91-theme");
+  if (saved) {
+    document.documentElement.setAttribute("data-theme", saved);
+    switcher.value = saved;
+  }
+
+  switcher.addEventListener("change", () => {
+    const theme = switcher.value;
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("repair91-theme", theme);
+  });
 }
 
 function setupEvents() {
   [search, model, part].forEach((element) => {
-    element.addEventListener("input", renderProducts);
-    element.addEventListener("change", renderProducts);
+    if (element) {
+      element.addEventListener("input", renderProducts);
+      element.addEventListener("change", renderProducts);
+    }
   });
 
-  grid.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-report]");
-    if (!button) return;
+  if (grid) {
+    grid.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-report]");
+      if (!button) return;
+      const product = PRODUCTS.find(({ id }) => id === button.dataset.report);
+      if (product) openReport(product);
+    });
+  }
 
-    const product = PRODUCTS.find(({ id }) => id === button.dataset.report);
-    if (product) openReport(product);
-  });
+  if (contactForm) {
+    contactForm.addEventListener("submit", submitContactForm);
+  }
+}
 
-  contactForm.addEventListener("submit", submitContactForm);
+function loadProducts() {
+  // products.js définit window.PRODUCTS_DATA (fonctionne en file:// et en https)
+  if (Array.isArray(window.PRODUCTS_DATA) && window.PRODUCTS_DATA.length) {
+    PRODUCTS = window.PRODUCTS_DATA;
+    return true;
+  }
+  PRODUCTS = [];
+  if (empty) {
+    empty.hidden = false;
+    empty.textContent = "Impossible de charger le catalogue (products.js manquant ou invalide).";
+  }
+  return false;
 }
 
 function init() {
-  populateFilters();
-  setupEvents();
   setupNavigation();
   setupCompatibilityPanel();
   setupRevealAnimations();
+  setupThemeSwitcher();
+  setupEvents();
 
-  $("#year").textContent = new Date().getFullYear();
+  const yearEl = $("#year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  loadProducts();
+  populateFilters();
   renderProducts();
 }
 
